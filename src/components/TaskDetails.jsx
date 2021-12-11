@@ -14,13 +14,11 @@ function TaskDetails() {
       const { data } = await axios.get(
         `http://localhost:5000/tasks/${params.id}`
       );
-
       setTask(data);
       setLoading(false);
     }
     fetchTask();
-    // eslint-disable-next-line
-  }, []);
+  }, [params.id]);
 
   return loading ? (
     <h3>Loading...</h3>

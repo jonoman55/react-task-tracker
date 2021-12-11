@@ -53,6 +53,6 @@ const AddTask = ({ onAdd }) => {
       <input className='btn btn-block' type='submit' value='Save Task' />
     </form>
   );
-}
+};
 
 export default AddTask;

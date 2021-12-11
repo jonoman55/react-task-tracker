@@ -4,11 +4,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
 import AddTask from './components/AddTask';
+import TaskDetails from './components/TaskDetails';
 import Footer from './components/Footer';
 import About from './components/About';
-import TaskDetails from './components/TaskDetails';
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
   const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([]);
 
@@ -16,6 +17,7 @@ const App = () => {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks();
       setTasks(tasksFromServer);
+      setLoading(false);
     };
     getTasks();
   }, []);
@@ -58,12 +60,16 @@ const App = () => {
       `http://localhost:5000/tasks/${id}`, upTask
     );
     setTasks(tasks.map((task) =>
-      task.id === id
-        ? { ...task, reminder: data.reminder } : task
+      task.id === id ?
+        { ...task, reminder: data.reminder } : task
     ));
   };
 
-  return (
+  return loading ? (
+    <div className='container'>
+      <h3>Loading...</h3>
+    </div>
+  ) : (
     <Router>
       <div className='container'>
         <Header
